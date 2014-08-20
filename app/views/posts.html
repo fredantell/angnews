@@ -10,6 +10,7 @@
         Post: {{ post }}
 
      <div ng-repeat="post in posts">
-
-       <a href="{{ post.url }}">{{ post.title }}</a><button ng-click="deletePost(post)">X</button>
+       <a href="{{ post.url }}">{{ post.title }}</a>
+       <a href="#/posts/{{ post.$id }}">comments</a>
+       <button ng-click="deletePost(post)">X</button>
      </div>
