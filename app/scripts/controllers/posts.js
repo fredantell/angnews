@@ -2,18 +2,16 @@
 
 app.controller('PostCtrl', function($scope, Post) {
   $scope.post = {url: 'http://', title: ''};
-  $scope.posts = Post.get();
+  $scope.posts = Post.all;
 
   $scope.submitPost = function () {
-    Post.save($scope.post, function(ref) {
-      $scope.posts[ref.name] = $scope.post;
-      $scope.post = {url: 'http://', title: ''};
-    });
+    Post.create($scope.post).
+        then(function() {
+            $scope.post = {url: 'http://', title: ''};
+        });
   };
 
-  $scope.deletePost = function(postuuid) {
-    Post.delete({id: postuuid}, function() {
-      delete $scope.posts[postuuid];
-    });
+  $scope.deletePost = function(post) {
+    Post.delete(post);
   };
 });
