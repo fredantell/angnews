@@ -14,8 +14,11 @@ var app = angular.module('angNewsApp', [
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'firebase'
 ])
+
+app.constant('FIREBASE_URL', 'https://luminous-heat-8461.firebaseio.com/')
 
 app.config(function ($routeProvider) {
   $routeProvider
