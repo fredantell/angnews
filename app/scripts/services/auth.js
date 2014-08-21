@@ -8,8 +8,9 @@ app.factory('Auth',
 
       var Auth = {
         register: function (user) {
-          auth.$createUser(user.email, user.password);
-          return Auth.login(user);
+          return {
+            createUser: auth.$createUser(user.email, user.password),
+            user: user};
         },
         signedIn: function () {
           return auth.user !== null;
