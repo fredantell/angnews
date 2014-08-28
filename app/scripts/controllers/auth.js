@@ -1,7 +1,7 @@
 'use strict';
 
 app.controller('AuthCtrl',
-    function ($scope, $location, Auth) {
+    function ($scope, $location, Auth, User) {
       if (Auth.signedIn()) {
         $location.path('/');
       }
@@ -11,21 +11,25 @@ app.controller('AuthCtrl',
       });
 
       $scope.login = function () {
-        Auth.login($scope.user).then(function () {
-          $location.path('/');
-        }, function (error) {
-          $scope.error = error.toString();
-        })
+        //query for user, when that comes back, use the info to do the below login
+        var userRef = User.findByUsername($scope.user.username);
+        userRef.on('value', function(snapshot) {
+          var usrObj = snapshot.val();
+          usrObj.password = $scope.user.password;
+          Auth.login(usrObj).then(function () {
+            $location.path('/');
+          }, function (error) {
+            $scope.error = error.toString();
+          });
+        });
       };
 
       $scope.register = function () {
-        //returns {} with createUser and user keys
-        //do this so we have easy access to obj.user
-        //for logging in after successful registration
-        var obj = Auth.register($scope.user);
+        var prom = Auth.register($scope.user);
 
-        obj.createUser.then(function (authUser) {
-          Auth.login(obj.user);
+        prom.then(function (authUser) {
+          User.create(authUser, $scope.user.username);
+          Auth.login($scope.user);
           $location.path('/');
         }, function (error) {
           $scope.error = error.toString();
