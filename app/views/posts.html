@@ -12,8 +12,9 @@
         </a>
       </div>
       <div>
-        <a href="#/posts/{{ postId }}">comments</a>
-        <a ng-click="deletePost(postId)">delete</a>
+        <a href="#/users/{{ post.owner }}">posted by {{ post.owner || "anonymous"}}</a><br/>
+        <a href="#/posts/{{ post.postId }}">comments</a>
+        <a ng-show="signedIn() && post.owner === currentUser.username" ng-click="deletePost(post)">delete</a>
       </div>
     </div>
     <div class="col-md-2">
