@@ -25,7 +25,7 @@ app.factory('Post', function ($firebase, FIREBASE_URL, User) {
       }
     },
     find: function(postId) {
-      return $firebase(ref.child(postId)).$asObject();
+      return $firebase(ref.child(postId));
     },
     delete: function(post) {
       //check to see if user is owner
