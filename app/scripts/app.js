@@ -30,6 +30,10 @@ app.config(function ($routeProvider) {
         templateUrl: 'views/showpost.html',
         controller: 'PostViewCtrl'
       })
+      .when('/users/:username', {
+        templateUrl: 'views/showuser.html',
+        controller: 'UserViewCtrl'
+      })
       .when('/register', {
         templateUrl: 'views/register.html',
         controller: 'AuthCtrl'

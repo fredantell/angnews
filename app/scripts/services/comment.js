@@ -35,12 +35,10 @@ app.factory('Comment', function($firebase, User, Post) {
       return $firebase(postCommentsRef).$remove(commentId).then(function(ref) {
         $firebase(userCommentsRef).$remove(commentId);
       });
-
-
-
-      //will get owner from post.owner or getCurrent().username
-      //will ref.child('comments') and $remove commentId
-
+    },
+    getCommentsByUsername: function(username) {
+      var userCommentsRef = User.findByUsername(username).child('comments');
+      return $firebase(userCommentsRef).$asArray();
     }
   };
 
