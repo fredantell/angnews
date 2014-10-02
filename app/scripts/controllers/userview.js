@@ -11,6 +11,8 @@ app.controller('UserViewCtrl', function($scope, $routeParams, $firebase, Comment
 
   function populatePosts(postIDs) {
     $scope.posts = {};
+    $scope.commentedPosts = {};
+    
     angular.forEach(postIDs, function (postID) {
       $scope.posts[postID] = Post.find(postID).$asObject();
     });
